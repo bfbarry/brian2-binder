@@ -38,7 +38,7 @@ This notebook is running on [mybinder.org](http://mybinder.org) created by the
 '''
 if not os.path.exists('tutorials'):
     os.mkdir('tutorials')
-for notebook in glob.glob('_tutorials/*.ipynb'):
+for notebook in sorted(glob.glob('_tutorials/*.ipynb')):
     with open(notebook, 'r') as f:
         content = reads(f.read())
     title = content.cells[0]['source'].split('\n')[0].strip('# ')
@@ -60,7 +60,7 @@ magic = '''%matplotlib notebook\n'''
 if not os.path.exists('examples'):
     os.mkdir('examples')
 for root, subfolders, files in os.walk('_examples'):
-    for file in files:
+    for file in sorted(files):
         if not file.endswith('.py'):
             continue
         example = os.path.join(root, file)
