@@ -61,26 +61,31 @@ if not os.path.exists('examples'):
     os.mkdir('examples')
 for root, subfolders, files in os.walk('_examples'):
     for file in sorted(files):
-        if not file.endswith('.py'):
-            continue
-        example = os.path.join(root, file)
-        all_examples.append((root[10:].replace('\\', '/'), file))
-        with open(example, 'r') as f:
-            code = f.read()
-
-        (base, ext) = os.path.splitext(os.path.split(example)[-1])
-
-        # Create blank notebook
-        content = new_notebook()
-        content['cells'] = [new_markdown_cell(note),
-                            new_code_cell(magic + code)]
-
         if not os.path.exists(root[1:]):
             os.mkdir(root[1:])
+        example = os.path.join(root, file)
+        # Copy all files over
+        shutil.copy(example, root[1:])
 
-        exporter = NotebookExporter()
-        output, _ = exporter.from_notebook_node(content)
-        codecs.open(''.join([root[1:], '/', base, '.ipynb']), 'w', encoding='utf-8').write(output)
+        if file.endswith('.py'):
+            # Convert Python files to Jupyter notebooks
+            all_examples.append((root[10:].replace('\\', '/'), file))
+            with open(example, 'r') as f:
+                code = f.read()
+
+            base, ext = os.path.splitext(os.path.split(example)[-1])
+
+            # Create blank notebook
+            content = new_notebook()
+            content['cells'] = [new_markdown_cell(note),
+                                new_code_cell(magic + code)]
+
+
+
+            exporter = NotebookExporter()
+            output, _ = exporter.from_notebook_node(content)
+            codecs.open(''.join([root[1:], '/', base, '.ipynb']), 'w',
+                        encoding='utf-8').write(output)
 
 shutil.rmtree('_examples')
 
