@@ -3,7 +3,7 @@ channels:
   - brian-team
   - conda-forge
 dependencies:
-  - python=3.7
+  - python=3.6
   - pip=19.1*
   #- sphinx
   #- coverage
