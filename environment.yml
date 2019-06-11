@@ -1,6 +1,5 @@
 name: brian2-binder
 channels:
-  - brian-team
   - conda-forge
 dependencies:
   - python=3.6
