@@ -7,10 +7,8 @@ For updates on Brian2, follow us on [twitter (@briansimulator)](https://twitter.
 ## Quickstart
 Click this button to launch the binder directly. [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/brian-team/brian2-binder/master?filepath=index.ipynb)
 
-Alternatively, launch the JupyterLab interface:
+Alternatively, launch the new JupyterLab interface:
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/brian-team/brian2-binder/master?urlpath=lab/tree/index.ipynb)
-
-If you have a Google account, you can try it with [Google Colab](http://colab.research.google.com/github/brian-team/brian2-binder).
 
 ## Manual instructions
 Alternatively, follow these steps to build this, or any other GitHub repository designed for binder (changing the repository URL appropriately).
