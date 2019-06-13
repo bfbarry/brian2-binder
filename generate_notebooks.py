@@ -22,7 +22,7 @@ def split_code(code):
     other_code = []
     for line in code.split('\n'):
         line = line.rstrip()
-        if len(line) == 0:
+        if len(line) == 0 and not in_multiline_comment:
             continue
         if re.match(r'^[ \t\f]*#.*?coding[:=][ \t]*([-_.a-zA-Z0-9]+)', line) is not None:
             continue
