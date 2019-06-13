@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 import glob
 import shutil
@@ -6,6 +7,50 @@ import nbformat as nbf
 from nbformat.v4 import reads, writes, new_markdown_cell, new_code_cell, new_notebook
 from nbconvert.exporters.notebook import NotebookExporter
 import codecs
+
+
+def split_code(code):
+    '''
+    Helper function to extract the docstring lines, the `from __future__`
+    imports, and the rest of the code. Also removes shebang lines and encoding
+    declarations
+    '''
+    in_multiline_comment = False
+    header_parsed = False
+    future_imports = []
+    docstring = []
+    other_code = []
+    for line in code.split('\n'):
+        line = line.rstrip()
+        if len(line) == 0:
+            continue
+        if re.match(r'^[ \t\f]*#.*?coding[:=][ \t]*([-_.a-zA-Z0-9]+)', line) is not None:
+            continue
+        if line.startswith('#!'):
+            continue
+        if header_parsed:  # past the initial lines with docstring/imports
+            other_code.append(line)
+        elif in_multiline_comment:
+            if line.endswith("'''") or line.endswith('"""'):
+                docstring.append(line[:-3])
+                in_multiline_comment = False
+            else:
+                docstring.append(line)
+        else:
+            if line.startswith('from __future__ import'):
+                future_imports.append(line)
+            elif line.startswith("'''") or line.startswith('"""'):
+                in_multiline_comment = True
+                docstring.append(line[3:])
+            else:
+                # Neither `from __future__` import nor docstring --> the rest
+                # is the main code of the example
+                other_code.append(line)
+                header_parsed = True
+    if len(future_imports):
+        # force an empty line
+        future_imports.append('')
+    return '\n'.join(future_imports), '\n'.join(docstring), '\n'.join(other_code)
 
 all_tutorials = []
 all_examples = []
@@ -73,12 +118,15 @@ for root, subfolders, files in os.walk('_examples'):
             with open(example, 'r') as f:
                 code = f.read()
 
+            future_imports, docstring, code = split_code(code)
+
             base, ext = os.path.splitext(os.path.split(example)[-1])
 
             # Create blank notebook
             content = new_notebook()
             content['cells'] = [new_markdown_cell(note),
-                                new_code_cell(magic + code)]
+                                new_markdown_cell(docstring),
+                                new_code_cell(future_imports + magic + code)]
 
 
 
