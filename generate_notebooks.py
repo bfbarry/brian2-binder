@@ -128,11 +128,10 @@ for root, subfolders, files in os.walk('_examples'):
 
             # Create blank notebook
             content = new_notebook()
-            content['cells'] = [new_markdown_cell(note),
-                                new_markdown_cell(docstring),
-                                new_code_cell(future_imports + magic + code)]
-
-
+            content['cells'] = [new_markdown_cell(note)]
+            if len(docstring):
+                content['cells'].append(new_markdown_cell(docstring))
+            content['cells'].append(new_code_cell(future_imports + magic + code))
 
             exporter = NotebookExporter()
             output, _ = exporter.from_notebook_node(content)
