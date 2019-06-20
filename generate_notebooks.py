@@ -76,10 +76,10 @@ To run the code below:
 Feel free to create new cells using the plus button
 (<button class='fa fa-plus icon-plus btn btn-xs btn-default'></button>), or pressing `SHIFT+ENTER` while this cell
 is selected.
-<div class="alert alert-warning" role="alert" style="margin: 10px">
-<p>**WARNING**</p>
-<p>Don't rely on this server for anything you want to last - your server will be
-*deleted after 1 hour of inactivity*.</p>
+<div class="alert alert-block alert-warning" role="alert" style="margin: 10px">
+<p><b>WARNING</b></p>
+<p>Don't rely on this server for anything you want to last - your session will be
+deleted after a short period of inactivity.</p>
 </div>
 
 This notebook is running on [mybinder.org](http://mybinder.org) created by the
