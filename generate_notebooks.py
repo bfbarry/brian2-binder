@@ -40,7 +40,7 @@ def split_code(code):
             if line.startswith('from __future__ import'):
                 future_imports.append(line)
             elif line.startswith("'''") or line.startswith('"""'):
-                if line.endswith("'''") or line.endswith('"""'):
+                if (line.endswith("'''") or line.endswith('"""')) and len(line) >= 6:
                     # Triple quoted single line docstring
                     docstring.append(line[3:-3])
                 else:
