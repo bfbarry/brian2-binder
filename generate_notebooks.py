@@ -40,8 +40,12 @@ def split_code(code):
             if line.startswith('from __future__ import'):
                 future_imports.append(line)
             elif line.startswith("'''") or line.startswith('"""'):
-                in_multiline_comment = True
-                docstring.append(line[3:])
+                if line.endswith("'''") or line.endswith('"""'):
+                    # Triple quoted single line docstring
+                    docstring.append(line[3:-3])
+                else:
+                    in_multiline_comment = True
+                    docstring.append(line[3:])
             else:
                 # Neither `from __future__` import nor docstring --> the rest
                 # is the main code of the example
