@@ -133,6 +133,11 @@ for root, subfolders, files in os.walk('_examples'):
                 content['cells'].append(new_markdown_cell(docstring))
             content['cells'].append(new_code_cell(future_imports + magic + code))
 
+            # Add kernel specification
+            content['metadata']['kernelspec'] = {"display_name": "Python 3",
+                                                 "language": "python",
+                                                 "name": "python3"}
+            
             exporter = NotebookExporter()
             output, _ = exporter.from_notebook_node(content)
             codecs.open(''.join([root[1:], '/', base, '.ipynb']), 'w',
