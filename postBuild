@@ -19,7 +19,7 @@ find . -name '*.ipynb' -exec jupyter trust {} \;
 
 # Copy Brian preference file to home
 mkdir ${HOME}/.brian
-mv user_preferences >${HOME}/.brian/user_preferences
+mv user_preferences ${HOME}/.brian/user_preferences
 
 # Cleanup
 rm generate_notebooks.py
