@@ -17,6 +17,10 @@ chown -R ${NB_USER} ${HOME}
 # Trust notebooks
 find . -name '*.ipynb' -exec jupyter trust {} \;
 
+# Copy Brian preference file to home
+mkdir ${HOME}/.brian
+mv user_preferences >${HOME}/.brian
+
 # Cleanup
 rm generate_notebooks.py
 rm index_template.ipynb
